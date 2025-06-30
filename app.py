@@ -3,6 +3,24 @@ import subprocess
 
 app = Flask(__name__)
 
+@app.route('/health', methods=['GET'])
+def health():
+    """Health check endpoint for Docker health checks"""
+    try:
+        # Test that cowsay command is available
+        result = subprocess.run(['cowsay', '--version'], capture_output=True, text=True, check=True)
+        return jsonify({
+            'status': 'healthy',
+            'service': 'cowsay',
+            'version': 'cowsay available',
+            'timestamp': __import__('time').time()
+        })
+    except subprocess.CalledProcessError:
+        return jsonify({
+            'status': 'unhealthy',
+            'error': 'cowsay command not available'
+        }), 500
+
 @app.route('/cowsay', methods=['POST'])
 def cowsay():
     data = request.get_json()

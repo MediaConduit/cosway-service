@@ -1,6 +1,6 @@
 FROM python:3.9-slim-buster
 
-RUN apt-get update && apt-get install -y cowsay && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y cowsay curl && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
