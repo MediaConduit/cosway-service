@@ -6,9 +6,9 @@ docker:
   serviceName: cowsay
   image: cowsay-service
   ports:
-    - 80
+    - 0  # Use dynamic port assignment (0 means assign random available port)
   healthCheck:
-    url: http://localhost:80/cowsay
+    url: http://localhost:__PORT__/health  # __PORT__ will be replaced with actual assigned port
 version: "1.0.0"
 capabilities:
   - TextToText
